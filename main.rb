@@ -1,10 +1,10 @@
 require 'gosu'
 require_relative './menu_state'
 
-WIDTH = 640
-HEIGHT = 480
+WIDTH = 768
+HEIGHT = 192
 
-class StartDestroyer < Gosu::Window
+class StarDestroyer < Gosu::Window
   def initialize
     super WIDTH, HEIGHT
     self.caption = 'StartDestroyer Game'
@@ -26,4 +26,4 @@ class StartDestroyer < Gosu::Window
   end
 end
 
-StartDestroyer.new.show
+StarDestroyer.new.show

@@ -24,7 +24,7 @@ class MenuState
         end
         if Gosu.button_down?(Gosu::KB_RETURN)
             if @currentSelected === 0
-                @states << GameState.new
+                @states << GameState.new(@width, @height)
             end
         end
     end
