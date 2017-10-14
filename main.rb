@@ -2,6 +2,7 @@ require 'gosu'
 require_relative 'obstacle'
 require_relative 'background'
 require_relative 'obstacle_spawner'
+require_relative 'player'
 
 class StarDestroyer < Gosu::Window
   def initialize
@@ -9,7 +10,8 @@ class StarDestroyer < Gosu::Window
     self.caption = 'StarDestroyer Game'
     @obstacle_spawner = ObstacleSpawner.new(3000, self.update_interval, self.width, self.height)
     @entities = [
-      Background.new(0,0)
+      Background.new(0,0),
+      Player.new(50, 50)
     ]
   end
 
