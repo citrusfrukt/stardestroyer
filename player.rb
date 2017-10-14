@@ -1,10 +1,16 @@
 require_relative 'entity'
+require_relative 'projectile'
 # This is a player class
 class Player < Entity
-  def initialize(x, y)
+  def initialize(x, y, spawner)
     super(x, y)
+    @spawner = spawner
     @image = Gosu::Image.new("media/starfighter.bmp")
     @angle = 90
+  end
+
+  def shoot
+    @spawner.call(Projectile.new(@x, @y))
   end
 
   def update
@@ -19,6 +25,9 @@ class Player < Entity
     end
     if Gosu.button_down? Gosu:: KB_DOWN
       @y = @y + 2
+    end
+    if Gosu.button_down? Gosu:: KB_SPACE
+      self.shoot
     end
   end
 

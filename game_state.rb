@@ -18,7 +18,7 @@ class GameState
 
     @background = Background.new(0,0)
     @entities = [
-      Player.new(50, height/2)
+      Player.new(50, height/2, spawn_entity)
     ]
   end
 
