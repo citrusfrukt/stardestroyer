@@ -10,6 +10,8 @@ class GameState
 
     spawn_entity = Proc.new do |*args|
       @entities << args.first
+      @song = Gosu::Song.new("media/Fantasy Game Loop.wav")
+      @song.play
     end
 
     @spawners = [
