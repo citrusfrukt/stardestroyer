@@ -1,19 +1,28 @@
 require 'gosu'
+require_relative './menu_state'
+
+WIDTH = 640
+HEIGHT = 480
 
 class StartDestroyer < Gosu::Window
   def initialize
-    super 640, 480
+    super WIDTH, HEIGHT
     self.caption = 'StartDestroyer Game'
 
-    @background_image = Gosu::Image.new("media/space.png", :tileable => true)
+    @states = []
+    @states << MenuState.new(WIDTH, HEIGHT, @states)
+  end
+
+  def currentState
+    @states[@states.length - 1]
   end
 
   def update
-    # ...
+    self.currentState.update
   end
 
   def draw
-    @background_image.draw(0, 0, 0)
+    self.currentState.draw
   end
 end
 
