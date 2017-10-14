@@ -1,51 +1,28 @@
 require 'gosu'
-require_relative 'enemy'
-require_relative 'obstacle'
-require_relative 'background'
-require_relative 'spawner'
-require_relative 'player'
+require_relative './menu_state'
+
+WIDTH = 768
+HEIGHT = 192
 
 class StarDestroyer < Gosu::Window
   def initialize
-    super 768, 192
-    self.caption = 'StarDestroyer Game'
-    @background = Background.new(0,0)
+    super WIDTH, HEIGHT
+    self.caption = 'StartDestroyer Game'
 
-    spawn_entity = Proc.new do |*args|
-      @entities << args.first
-    end
+    @states = []
+    @states << MenuState.new(WIDTH, HEIGHT, @states)
+  end
 
-    @spawners = [
-      Spawner.new(5000, self.update_interval, self.width, self.height, spawn_entity),
-    ]
-
-    @entities = [
-      Player.new(50, self.height/2)
-    ]
+  def currentState
+    @states[@states.length - 1]
   end
 
   def update
-    @spawners.each do |s|
-      s.update()
-    end
-
-    @background.update()
-    @entities.delete_if do |e|
-      if e.removeMe
-        true
-      else
-        e.update()
-        false
-      end
-    end
-    # ...
+    self.currentState.update
   end
 
   def draw
-    @background.draw()
-    for e in @entities
-      e.draw()
-    end
+    self.currentState.draw
   end
 end
 
