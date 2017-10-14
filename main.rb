@@ -1,20 +1,35 @@
 require 'gosu'
+require_relative 'obstacle'
+require_relative 'background'
+require_relative 'obstacle_spawner'
 
-class StartDestroyer < Gosu::Window
+class StarDestroyer < Gosu::Window
   def initialize
-    super 640, 480
-    self.caption = 'StartDestroyer Game'
-
-    @background_image = Gosu::Image.new("media/space.png", :tileable => true)
+    super 768, 192
+    self.caption = 'StarDestroyer Game'
+    @obstacle_spawner = ObstacleSpawner.new(3000, self.update_interval, self.width, self.height)
+    @entities = [
+      Background.new(0,0)
+    ]
   end
 
   def update
+    obstacle = @obstacle_spawner.spawn_obstacle
+    if obstacle
+      @entities << obstacle
+      puts @entities
+    end
+    for e in @entities
+      e.update()
+    end
     # ...
   end
 
   def draw
-    @background_image.draw(0, 0, 0)
+    for e in @entities
+      e.draw()
+    end
   end
 end
 
-StartDestroyer.new.show
+StarDestroyer.new.show
