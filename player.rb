@@ -1,9 +1,9 @@
+require_relative 'entity'
 # This is a player class
-class Player
-  def initialize (x, y)
+class Player < Entity
+  def initialize(x, y)
+    super(x, y)
     @image = Gosu::Image.new("media/starfighter.bmp")
-    @x = x
-    @y = y
     @angle = 90
   end
 
