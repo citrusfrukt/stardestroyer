@@ -9,10 +9,16 @@ class StarDestroyer < Gosu::Window
   def initialize
     super 768, 192
     self.caption = 'StarDestroyer Game'
-    @spawners = [
-      Spawner.new(5000, self.update_interval, self.width, self.height, Enemy),
-    ]
     @background = Background.new(0,0)
+
+    spawn_entity = Proc.new do |*args|
+      @entities << args.first
+    end
+
+    @spawners = [
+      Spawner.new(5000, self.update_interval, self.width, self.height, spawn_entity),
+    ]
+
     @entities = [
       Player.new(50, self.height/2)
     ]
@@ -20,12 +26,6 @@ class StarDestroyer < Gosu::Window
 
   def update
     @spawners.each do |s|
-      if s.shouldSpawn
-        obstacle = s.spawn
-        @entities << obstacle
-        puts @entities
-      end
-
       s.update()
     end
 
