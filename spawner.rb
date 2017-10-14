@@ -1,9 +1,11 @@
+require_relative 'enemy'
+
 class Spawner
   def initialize(time_between_spawn,
                  update_interval,
                  width,
                  height,
-                 to_spawn)
+                 spawn_entity)
 
     @shouldSpawn = false
     @update_interval = update_interval
@@ -11,7 +13,7 @@ class Spawner
     @dt = 0
     @width = width
     @height = height
-    @to_spawn = to_spawn
+    @spawn_entity = spawn_entity
   end
 
   def shouldSpawn
@@ -23,16 +25,15 @@ class Spawner
 
     if @dt > @time_between_spawn - r
       @dt = 0
-      @shouldSpawn = true
+      self.spawn
     else
       @dt = @dt + @update_interval
-      @shouldSpawn = false
     end
   end
 
   def spawn
     x = @width
     y = Gosu::random(0.15, 0.85) * @height
-    return @to_spawn.new(x, y)
+    @spawn_entity.call(Enemy.new(x,y))
   end
 end
