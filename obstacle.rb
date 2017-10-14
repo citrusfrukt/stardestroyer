@@ -4,7 +4,6 @@ require_relative 'entity'
 class Obstacle < Entity
   def initialize(x, y)
     super(x, y)
-    @sprite = Gosu::Image.new("media/starfighter.bmp")
   end
 
   def update
