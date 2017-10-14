@@ -2,8 +2,9 @@ require 'gosu'
 require_relative 'entity'
 
 class Obstacle < Entity
-  def initialize(x, y)
+  def initialize(x, y, height)
     super(x, y)
+    @height = height
   end
 
   def update
@@ -16,6 +17,6 @@ class Obstacle < Entity
 
   def draw
     # draw the obstacle
-    Gosu::draw_rect(@x, @y, 30, 100, Gosu::Color::WHITE, 10)
+    Gosu::draw_rect(@x, @y, 30, @height, Gosu::Color::WHITE, 10)
   end
 end

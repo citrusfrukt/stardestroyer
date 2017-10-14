@@ -1,9 +1,9 @@
 require_relative 'enemy'
 require_relative 'obstacle'
 require_relative 'background'
-require_relative 'spawner'
+require_relative 'enemy_spawner'
+require_relative 'obstacle_spawner'
 require_relative 'player'
-
 
 class GameState
   def initialize(width, height)
@@ -13,7 +13,8 @@ class GameState
     end
 
     @spawners = [
-      Spawner.new(5000, 16.6, width, height, spawn_entity),
+      EnemySpawner.new(5000, 16.6, width, height, spawn_entity),
+      ObstacleSpawner.new(5000, 16.6, width, height, spawn_entity)
     ]
 
     @background = Background.new(0,0)
