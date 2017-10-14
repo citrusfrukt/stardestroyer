@@ -1,33 +1,48 @@
 require 'gosu'
+require_relative 'enemy'
 require_relative 'obstacle'
 require_relative 'background'
-require_relative 'obstacle_spawner'
+require_relative 'spawner'
 require_relative 'player'
 
 class StarDestroyer < Gosu::Window
   def initialize
     super 768, 192
     self.caption = 'StarDestroyer Game'
-    @obstacle_spawner = ObstacleSpawner.new(3000, self.update_interval, self.width, self.height)
+    @spawners = [
+      Spawner.new(5000, self.update_interval, self.width, self.height, Enemy),
+    ]
+    @background = Background.new(0,0)
     @entities = [
-      Background.new(0,0),
-      Player.new(50, 50)
+      Player.new(50, self.height/2)
     ]
   end
 
   def update
-    obstacle = @obstacle_spawner.spawn_obstacle
-    if obstacle
-      @entities << obstacle
-      puts @entities
+    @spawners.each do |s|
+      if s.shouldSpawn
+        obstacle = s.spawn
+        @entities << obstacle
+        puts @entities
+      end
+
+      s.update()
     end
-    for e in @entities
-      e.update()
+
+    @background.update()
+    @entities.delete_if do |e|
+      if e.removeMe
+        true
+      else
+        e.update()
+        false
+      end
     end
     # ...
   end
 
   def draw
+    @background.draw()
     for e in @entities
       e.draw()
     end
